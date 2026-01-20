@@ -24,6 +24,14 @@ public class Reservation {
     @Column(nullable = false)
     private LocalDateTime endTime;
 
+    public Reservation() {}
+
+    public Reservation(MeetingRoom meetingRoom, LocalDateTime startTime, LocalDateTime endTime) {
+        this.meetingRoom = meetingRoom;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     public Long getId() {
         return id;
     }
@@ -50,5 +58,11 @@ public class Reservation {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation [id=" + id + ", meetingRoom=" + meetingRoom + ", startTime=" + startTime + ", endTime="
+                + endTime + "]";
     }
 }
