@@ -3,6 +3,7 @@ package backend.bookingsystem.web;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,12 +27,12 @@ public class ReservationController {
 
     @PostMapping
     public Reservation create(
-            @RequestParam Long roomId,
-            @RequestParam LocalDateTime start,
-            @RequestParam LocalDateTime end
-    ) {
-        return reservationService.create(roomId, start, end);
-    }
+        @RequestParam Long roomId,
+        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTime,
+        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime
+) {
+    return reservationService.create(roomId, startTime, endTime);
+}
 
     @DeleteMapping("/{id}")
     public void cancel(@PathVariable Long id) {
