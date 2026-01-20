@@ -11,3 +11,8 @@
 ![Prompt 11](public/11.jpg)
 ![Prompt 12](public/12.jpg)
 ![Prompt 13](public/13.jpg)
+![Prompt 14](public/14.jpg)
+![Prompt 15](public/15.jpg)
+![Prompt 16](public/16.jpg)
+![Prompt 17](public/17.jpg)
+![Prompt 18](public/18.jpg)
