@@ -22,19 +22,19 @@ public class ReservationService {
         this.entityManager = entityManager;
     }
 
-    public Reservation create(Long roomId, LocalDateTime start, LocalDateTime end) {
+    public Reservation create(Long roomId, LocalDateTime startTime, LocalDateTime endTime) {
 
-        if (start.isAfter(end)) {
+        if (startTime.isAfter(endTime)) {
             throw new IllegalArgumentException("Start time must be before end time");
         }
 
-        if (start.isBefore(LocalDateTime.now())) {
+        if (startTime.isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("Reservation cannot be in the past");
         }
 
         boolean overlap = reservationRepository
-                .existsByMeetingRoomIdAndStartTimeLessThanAndEndTimeGreaterThan(
-                        roomId, end, start
+                .isRoomOccupied(
+                        roomId, startTime, endTime
                 );
 
         if (overlap) {
@@ -45,8 +45,8 @@ public class ReservationService {
 
         Reservation reservation = new Reservation();
         reservation.setMeetingRoom(room);
-        reservation.setStartTime(start);
-        reservation.setEndTime(end);
+        reservation.setStartTime(startTime);
+        reservation.setEndTime(endTime);
 
         return reservationRepository.save(reservation);
     }

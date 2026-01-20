@@ -11,9 +11,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     List<Reservation> findByMeetingRoomId(Long meetingRoomId);
 
-    boolean existsByMeetingRoomIdAndStartTimeLessThanAndEndTimeGreaterThan(
+    boolean isRoomOccupied(
             Long meetingRoomId,
-            LocalDateTime endTime,
-            LocalDateTime startTime
+            LocalDateTime startTime,
+            LocalDateTime endTime
+            
     );
 }
