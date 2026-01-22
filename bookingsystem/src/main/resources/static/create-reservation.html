@@ -14,10 +14,9 @@
 
     <label>Valitse huone:</label><br>
     <select id="roomSelect">
-    <option value="1">Room A</option>
-    <option value="2">Room B</option>
-    </select>
-
+        <option value="1">Room A</option>
+        <option value="2">Room B</option>
+    </select><br><br>
 
     <label>Alkuaika:</label><br>
     <input type="datetime-local" id="startTime" required><br><br>
@@ -28,13 +27,14 @@
     <button type="submit">Luo varaus</button>
 </form>
 
+<div id="result"></div>
+
 <script src="/js/app.js"></script>
 <script>
-    loadRoomsToDropdown();
-
-    document.getElementById("reservationForm").addEventListener("submit", async (e) => {
+    document.getElementById("reservationForm").addEventListener("submit", function (e) {
         e.preventDefault();
-        createReservationFromForm();
+        const roomId = document.getElementById("roomSelect").value;
+        createReservation(roomId);
     });
 </script>
 

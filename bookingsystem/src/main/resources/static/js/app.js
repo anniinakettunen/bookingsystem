@@ -37,23 +37,39 @@ function createReservation(roomId) {
     const startTime = document.getElementById("startTime").value;
     const endTime = document.getElementById("endTime").value;
 
-    fetch("/api/reservations?roomId=" + roomId +
-        "&startTime=" + startTime +
-        "&endTime=" + endTime,
-        { method: "POST" })
-        .then(async r => {
-            const text = await r.text();
-            document.getElementById("result").innerText = text;
+    const start = new Date(startTime);
+    const end = new Date(endTime);
 
-            if (r.ok) {
-                setTimeout(() => {
-                    window.location.href = "/reservations.html?roomId=" + roomId;
-                }, 1000);
-            }
-        });
+    if (start.getMinutes() !== 0 || end.getMinutes() !== 0) {
+        document.getElementById("result").innerText = "Varaus on tehtävä tasatunnein (esim. 16:00–17:00).";
+        return;
+    }
+
+    const diffHours = (end - start) / (1000 * 60 * 60);
+    if (diffHours !== 1) {
+        document.getElementById("result").innerText = "Varausajan on oltava tasan 1 tunti.";
+        return;
+    }
+
+    const startIso = start.toISOString();
+    const endIso = end.toISOString();
+
+    fetch(`/api/reservations?roomId=${roomId}&startTime=${startIso}&endTime=${endIso}`, {
+        method: "POST"
+    })
+    .then(async r => {
+        const text = await r.text();
+        document.getElementById("result").innerText = text;
+
+        if (r.ok) {
+            setTimeout(() => {
+                window.location.href = "/reservations.html";
+            }, 1000);
+        }
+    });
 }
 
-// Delete reservation
+
 function deleteReservation(id, roomId) {
     fetch(`/api/reservations/${id}`, { method: "DELETE" })
         .then(() => loadReservations(roomId));
