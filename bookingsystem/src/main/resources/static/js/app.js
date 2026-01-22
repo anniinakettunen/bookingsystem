@@ -74,3 +74,38 @@ function deleteReservation(id, roomId) {
     fetch(`/api/reservations/${id}`, { method: "DELETE" })
         .then(() => loadReservations(roomId));
 }
+
+function loadAllReservations() {
+    const container = document.getElementById("reservationList");
+
+    
+    fetch("/api/rooms")
+        .then(r => r.json())
+        .then(rooms => {
+            container.innerHTML = "";
+
+            rooms.forEach(room => {
+                const roomDiv = document.createElement("div");
+                roomDiv.innerHTML = `<h3>${room.name}</h3>`;
+
+                fetch(`/api/reservations/room/${room.id}`)
+                    .then(r => r.json())
+                    .then(reservations => {
+                        if (reservations.length === 0) {
+                            roomDiv.innerHTML += "<p>Ei varauksia.</p>";
+                        } else {
+                            reservations.forEach(res => {
+                                roomDiv.innerHTML += `
+                                    <p>
+                                        ${res.startTime} → ${res.endTime}
+                                        <button onclick="deleteReservation(${res.id}, ${room.id})">Poista</button>
+                                    </p>
+                                `;
+                            });
+                        }
+                    });
+
+                container.appendChild(roomDiv);
+            });
+        });
+}
