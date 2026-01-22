@@ -3,30 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Tee varaus</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
 
-<button onclick="location.href='index.html'">Palaa etusivulle</button>
+<button class="top-right" onclick="location.href='index.html'">Palaa etusivulle</button>
 
 <h1>Tee varaus</h1>
 
 <form id="reservationForm">
 
-    <label for="nickname">Nimimerkki:</label><br>
-    <input type="text" id="nickname" required><br><br>
+    <label for="nickname">Nimimerkki:</label>
+    <input type="text" id="nickname" required>
 
-    <label for="roomSelect">Valitse huone:</label><br>
+    <label for="roomSelect">Valitse huone:</label>
     <select id="roomSelect">
         <option value="1">Room A</option>
         <option value="2">Room B</option>
-    </select><br><br>
+    </select>
 
-    <label for="startTime">Alkuaika:</label><br>
-    <input type="datetime-local" id="startTime" step="3600" required><br><br>
+    <label for="startTime">Alkuaika:</label>
+    <input type="datetime-local" id="startTime" step="3600" required>
 
-    <label for="endTime">Loppuaika:</label><br>
-    <input type="datetime-local" id="endTime" step="3600" required><br><br>
+    <label for="endTime">Loppuaika:</label>
+    <input type="datetime-local" id="endTime" step="3600" required>
 
     <button type="submit">Luo varaus</button>
 </form>
@@ -64,4 +65,3 @@
 
 </body>
 </html>
-
