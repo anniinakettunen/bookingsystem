@@ -7,19 +7,19 @@ import org.springframework.stereotype.Service;
 
 import backend.bookingsystem.model.MeetingRoom;
 import backend.bookingsystem.model.Reservation;
+import backend.bookingsystem.repository.MeetingRoomRepository;
 import backend.bookingsystem.repository.ReservationRepository;
-import jakarta.persistence.EntityManager;
 
 @Service
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-    private final EntityManager entityManager;
+    private final MeetingRoomRepository meetingRoomRepository;
 
     public ReservationService(ReservationRepository reservationRepository,
-                              EntityManager entityManager) {
+                              MeetingRoomRepository meetingRoomRepository) {
         this.reservationRepository = reservationRepository;
-        this.entityManager = entityManager;
+        this.meetingRoomRepository = meetingRoomRepository;
     }
 
     public Reservation create(Long roomId, LocalDateTime startTime, LocalDateTime endTime) {
@@ -32,16 +32,13 @@ public class ReservationService {
             throw new IllegalArgumentException("Reservation cannot be in the past");
         }
 
-        boolean overlap = reservationRepository
-                .isRoomOccupied(
-                        roomId, startTime, endTime
-                );
-
+        boolean overlap = reservationRepository.isRoomOccupied(roomId, startTime, endTime);
         if (overlap) {
             throw new IllegalArgumentException("Meeting room already reserved for this time");
         }
 
-        MeetingRoom room = entityManager.getReference(MeetingRoom.class, roomId);
+        MeetingRoom room = meetingRoomRepository.findById(roomId)
+                .orElseThrow(() -> new IllegalArgumentException("Meeting room not found"));
 
         Reservation reservation = new Reservation();
         reservation.setMeetingRoom(room);
@@ -59,3 +56,4 @@ public class ReservationService {
         return reservationRepository.findByMeetingRoomId(roomId);
     }
 }
+
