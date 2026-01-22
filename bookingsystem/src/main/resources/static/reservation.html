@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservations</title>
+</head>
+<body>
+
+<h1>Reservations for Room</h1>
+
+<div id="reservationList"></div>
+
+<a id="createLink">Create new reservation</a>
+
+<script src="/js/app.js"></script>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const roomId = params.get("roomId");
+
+    document.getElementById("createLink").href = "/create-reservation.html?roomId=" + roomId;
+
+    loadReservations(roomId);
+</script>
+
+</body>
+</html>
