@@ -3,39 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Tee varaus</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"> </head>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        label { font-weight: bold; }
-        button { margin-top: 10px; padding: 8px 16px; }
-        .back { margin-top: 20px; background: #ddd; }
-        #result { margin-top: 15px; font-weight: bold; }
-    </style>
 </head>
+
 <body>
+
+<button onclick="location.href='index.html'">Palaa etusivulle</button>
 
 <h1>Tee varaus</h1>
 
-
-<div id="error" style="color:red;"></div>
-
 <form id="reservationForm">
 
-    <label>Valitse huone:</label><br>
+    <label for="nickname">Nimimerkki:</label><br>
+    <input type="text" id="nickname" required><br><br>
+
+    <label for="roomSelect">Valitse huone:</label><br>
     <select id="roomSelect">
         <option value="1">Room A</option>
         <option value="2">Room B</option>
     </select><br><br>
 
-    <label>Alkuaika:</label><br>
+    <label for="startTime">Alkuaika:</label><br>
     <input type="datetime-local" id="startTime" step="3600" required><br><br>
 
-    <label>Loppuaika:</label><br>
+    <label for="endTime">Loppuaika:</label><br>
     <input type="datetime-local" id="endTime" step="3600" required><br><br>
 
     <button type="submit">Luo varaus</button>
 </form>
-<button class="back" onclick="location.href='index.html'">Palaa etusivulle</button>
+
 <div id="result"></div>
 
 <script src="/js/app.js"></script>
@@ -69,3 +64,4 @@
 
 </body>
 </html>
+
