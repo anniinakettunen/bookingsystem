@@ -1,33 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fi">
 <head>
     <meta charset="UTF-8">
-    <title>Create Reservation</title>
+    <title>Tee varaus</title>
 </head>
 <body>
 
-<h1>Create Reservation</h1>
+<h1>Tee varaus</h1>
+
+<div id="error" style="color:red;"></div>
 
 <form id="reservationForm">
-    <label>Start time:</label><br>
-    <input type="datetime-local" id="startTime"><br><br>
 
-    <label>End time:</label><br>
-    <input type="datetime-local" id="endTime"><br><br>
+    <label>Valitse huone:</label><br>
+    <select id="roomSelect"></select><br><br>
 
-    <button type="submit">Create</button>
+    <label>Alkuaika:</label><br>
+    <input type="datetime-local" id="startTime" required><br><br>
+
+    <label>Loppuaika:</label><br>
+    <input type="datetime-local" id="endTime" required><br><br>
+
+    <button type="submit">Luo varaus</button>
 </form>
-
-<div id="result"></div>
 
 <script src="/js/app.js"></script>
 <script>
-    const params = new URLSearchParams(window.location.search);
-    const roomId = params.get("roomId");
+    loadRoomsToDropdown();
 
-    document.getElementById("reservationForm").addEventListener("submit", function (e) {
+    document.getElementById("reservationForm").addEventListener("submit", async (e) => {
         e.preventDefault();
-        createReservation(roomId);
+        createReservationFromForm();
     });
 </script>
 
