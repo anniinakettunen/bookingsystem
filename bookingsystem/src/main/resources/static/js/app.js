@@ -25,7 +25,7 @@ function loadReservations(roomId) {
 
             div.innerHTML = reservations.map(res =>
                 `<p>
-                    ${res.startTime} → ${res.endTime}
+                    ${formatDateTime(res.startTime)} - ${formatDateTime(res.endTime)}
                     <button onclick="deleteReservation(${res.id}, ${roomId})">Delete</button>
                 </p>`
             ).join("");
@@ -97,7 +97,7 @@ function loadAllReservations() {
                             reservations.forEach(res => {
                                 roomDiv.innerHTML += `
                                     <p>
-                                        ${res.startTime} → ${res.endTime}
+                                        ${formatDateTime(res.startTime)} - ${formatDateTime(res.endTime)}
                                         <button onclick="deleteReservation(${res.id}, ${room.id})">Poista</button>
                                     </p>
                                 `;
@@ -108,4 +108,17 @@ function loadAllReservations() {
                 container.appendChild(roomDiv);
             });
         });
+}
+
+function formatDateTime(isoString) {
+    const d = new Date(isoString);
+
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const year = d.getFullYear();
+
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+
+    return `${day}.${month}.${year} klo ${hours}:${minutes}`;
 }
