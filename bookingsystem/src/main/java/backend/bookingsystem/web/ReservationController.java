@@ -27,18 +27,20 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(
-            @RequestParam Long roomId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTime,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime
-    ) {
-        try {
-            Reservation reservation = reservationService.create(roomId, startTime, endTime);
-            return ResponseEntity.ok(reservation);
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
+public ResponseEntity<?> create(
+        @RequestParam Long roomId,
+        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTime,
+        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime,
+        @RequestParam String nickname
+) {
+    try {
+        Reservation reservation = reservationService.create(roomId, startTime, endTime, nickname);
+        return ResponseEntity.ok(reservation);
+    } catch (IllegalArgumentException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
+}
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> cancel(@PathVariable Long id) {

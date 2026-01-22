@@ -33,16 +33,21 @@ public class Reservation {
     @Size(max = 500, message = "Additional info can be at most 500 characters.")
     private String additionalInfo;
 
+    @Size(max = 50, message = "Nickname can be at most 50 characters.")
+    private String nickname;
+
     public Reservation() {}
 
     public Reservation(MeetingRoom meetingRoom,
                        LocalDateTime startTime,
                        LocalDateTime endTime,
-                       String additionalInfo) {
+                       String additionalInfo,
+                       String nickname) {
         this.meetingRoom = meetingRoom;
         this.startTime = startTime;
         this.endTime = endTime;
         this.additionalInfo = additionalInfo;
+        this.nickname = nickname;
     }
 
     public Long getId() {
@@ -81,6 +86,14 @@ public class Reservation {
         this.additionalInfo = additionalInfo;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     @Override
     public String toString() {
         return "Reservation{" +
@@ -88,6 +101,7 @@ public class Reservation {
                 ", meetingRoom=" + (meetingRoom != null ? meetingRoom.getId() : null) +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
+                ", nickname='" + nickname + '\'' +
                 '}';
     }
 }
