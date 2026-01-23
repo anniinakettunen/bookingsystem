@@ -99,8 +99,8 @@ JavaScript suorittaa validoinnin ennen varauksen lähettämistä.
 
 Näyttää:
 
-Huone A:n varaukset
-Huone B:n varaukset
+Kokoushuone Neliöjuuri varaukset
+Kokoushuone Funktio varaukset
 Poista‑painikkeen jokaiselle varaukselle
 Taulukot renderöidään JavaScriptin avulla.
 
