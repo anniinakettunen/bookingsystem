@@ -47,4 +47,11 @@
 ![Prompt 47](public/47.jpg)
 ![Prompt 48](public/48.jpg)
 ![Prompt 49](public/49.jpg)
+![Prompt 50](public/50.jpg)
+![Prompt 51](public/51.jpg)
+![Prompt 52](public/52.jpg)
+![Prompt 53](public/53.jpg)
+![Prompt 54](public/54.jpg)
+![Prompt 55](public/55.jpg)
+![Prompt 56](public/56.jpg)
 
