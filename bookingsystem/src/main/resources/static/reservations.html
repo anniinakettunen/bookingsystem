@@ -4,46 +4,68 @@
     <meta charset="UTF-8">
     <title>Varauslista</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<button class="top-right" onclick="location.href='index.html'">Palaa etusivulle</button>
+    <div id="header"></div>
 
-<h1>Varauslista</h1>
+    <div class="card">
 
-<th>Huone A</th>
-<table id="roomA" border="1" cellpadding="6">
-    <thead>
-        <tr>
-            <th>Päivämäärä</th>
-            <th>Kellonaika</th>
-            <th>Varaaja</th>
-            <th>Poista</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+        <h1>Varauslista</h1>
 
-<br>
+        <h3>Huone A</h3>
+        <table id="roomA" border="1" cellpadding="6">
+            <thead>
+                <tr>
+                    <th>Päivämäärä</th>
+                    <th>Kellonaika</th>
+                    <th>Varaaja</th>
+                    <th>Poista</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
-<th>Huone B</th>
-<table id="roomB" border="1" cellpadding="6">
-    <thead>
-        <tr>
-            <th>Päivämäärä</th>
-            <th>Kellonaika</th>
-            <th>Varaaja</th>
-            <th>Poista</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+        <h3>Huone B</h3>
+        <table id="roomB" border="1" cellpadding="6">
+            <thead>
+                <tr>
+                    <th>Päivämäärä</th>
+                    <th>Kellonaika</th>
+                    <th>Varaaja</th>
+                    <th>Poista</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
-<script src="/js/app.js"></script>
-<script>
-    loadAllReservations();
-</script>
+    </div>
+
+ 
+    <div id="footer"></div>
+
+
+    <script src="/js/app.js"></script>
+
+  
+    <script>
+        async function loadPartials() {
+            document.getElementById("header").innerHTML =
+                await (await fetch("/partials/header.html")).text();
+
+            document.getElementById("footer").innerHTML =
+                await (await fetch("/partials/footer.html")).text();
+        }
+
+        loadPartials();
+    </script>
+
+   
+    <script>
+        loadAllReservations();
+    </script>
 
 </body>
 </html>

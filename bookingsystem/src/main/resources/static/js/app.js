@@ -1,4 +1,3 @@
-
 function loadRooms() {
     fetch("/api/rooms")
         .then(r => r.json())
@@ -12,7 +11,6 @@ function loadRooms() {
             ).join("");
         });
 }
-
 
 function loadReservations(roomId) {
     fetch(`/api/reservations/room/${roomId}`)
@@ -34,13 +32,12 @@ function loadReservations(roomId) {
                         <strong>${date}</strong><br>
                         ${time}<br>
                         <small>Varannut: ${res.nickname ?? "—"}</small><br>
-                        <button onclick="deleteReservation(${res.id}, ${roomId})">Poista</button>
+                        <button class="delete-btn" onclick="deleteReservation(${res.id}, ${roomId})">Poista</button>
                     </p>
                 `;
             }).join("");
         });
 }
-
 
 function createReservation(roomId) {
     const startTime = document.getElementById("startTime").value;
@@ -50,14 +47,12 @@ function createReservation(roomId) {
     const start = new Date(startTime);
     const end = new Date(endTime);
 
- 
     if (start.getMinutes() !== 0 || end.getMinutes() !== 0) {
         document.getElementById("result").innerText =
             "Varaus on tehtävä tasatunnein (esim. 16:00–17:00).";
         return;
     }
 
-   
     const diffHours = (end - start) / (1000 * 60 * 60);
     if (diffHours !== 1) {
         document.getElementById("result").innerText =
@@ -72,39 +67,40 @@ function createReservation(roomId) {
         method: "POST"
     })
         .then(async r => {
-            const text = await r.text();
-            document.getElementById("result").innerText = text;
-
             if (r.ok) {
+                document.getElementById("result").innerText = "Varaus onnistui!";
+                document.getElementById("result").style.color = "#2d3436";
+
                 setTimeout(() => {
                     window.location.href = "/reservations.html";
                 }, 1000);
+            } else {
+                const error = await r.text();
+                document.getElementById("result").innerText = error;
+                document.getElementById("result").style.color = "#d63031";
             }
         });
 }
 
-
 function deleteReservation(id, roomId) {
     fetch(`/api/reservations/${id}`, { method: "DELETE" })
-        .then(() => loadReservations(roomId));
+        .then(() => {
+            if (roomId) loadReservations(roomId);
+            loadAllReservations();
+        });
 }
 
-
 function loadAllReservations() {
-
     document.querySelector("#roomA tbody").innerHTML = "";
     document.querySelector("#roomB tbody").innerHTML = "";
 
     fetch("/api/rooms")
         .then(r => r.json())
         .then(rooms => {
-
             rooms.forEach(room => {
-
                 fetch(`/api/reservations/room/${room.id}`)
                     .then(r => r.json())
                     .then(reservations => {
-
                         const tbody = document.querySelector(
                             room.name === "Room A" ? "#roomA tbody" : "#roomB tbody"
                         );
@@ -115,7 +111,6 @@ function loadAllReservations() {
                         }
 
                         reservations.forEach(res => {
-
                             const date = formatDate(res.startTime);
                             const time = formatTimeRange(res.startTime, res.endTime);
                             const name = res.nickname ?? "—";
@@ -126,7 +121,9 @@ function loadAllReservations() {
                                     <td>${time}</td>
                                     <td>${name}</td>
                                     <td>
-                                        <button onclick="deleteReservation(${res.id}, ${room.id})">Poista</button>
+                                        <button class="delete-btn" onclick="deleteReservation(${res.id}, ${room.id})">
+                                            Poista
+                                        </button>
                                     </td>
                                 </tr>
                             `;
@@ -135,7 +132,6 @@ function loadAllReservations() {
             });
         });
 }
-
 
 function formatDate(isoString) {
     const d = new Date(isoString);
