@@ -4,64 +4,87 @@
     <meta charset="UTF-8">
     <title>Tee varaus</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<button class="top-right" onclick="location.href='index.html'">Palaa etusivulle</button>
+    <div id="header"></div>
 
-<h1>Tee varaus</h1>
+    <div class="card">
 
-<form id="reservationForm">
+        <h1>Tee varaus</h1>
 
-    <label for="nickname">Nimimerkki:</label>
-    <input type="text" id="nickname" required>
+        <form id="reservationForm">
 
-    <label for="roomSelect">Valitse huone:</label>
-    <select id="roomSelect">
-        <option value="1">Room A</option>
-        <option value="2">Room B</option>
-    </select>
+            <label for="nickname">Nimimerkki:</label>
+            <input type="text" id="nickname" required>
 
-    <label for="startTime">Alkuaika:</label>
-    <input type="datetime-local" id="startTime" step="3600" required>
+            <label for="roomSelect">Valitse huone:</label>
+            <select id="roomSelect">
+                <option value="1">Huone A</option>
+                <option value="2">Huone B</option>
+            </select>
 
-    <label for="endTime">Loppuaika:</label>
-    <input type="datetime-local" id="endTime" step="3600" required>
+            <label for="startTime">Alkuaika:</label>
+            <input type="datetime-local" id="startTime" step="3600" required>
 
-    <button type="submit">Luo varaus</button>
-</form>
+            <label for="endTime">Loppuaika:</label>
+            <input type="datetime-local" id="endTime" step="3600" required>
 
-<div id="result"></div>
+            <button type="submit">Luo varaus</button>
+        </form>
 
-<script src="/js/app.js"></script>
-<script>
-    document.getElementById("reservationForm").addEventListener("submit", function (e) {
-        e.preventDefault();
+        <div id="result"></div>
 
-        const roomId = document.getElementById("roomSelect").value;
-        const startTime = document.getElementById("startTime").value;
-        const endTime = document.getElementById("endTime").value;
+    </div>
 
-        const start = new Date(startTime);
-        const end = new Date(endTime);
 
-        if (start.getMinutes() !== 0 || end.getMinutes() !== 0) {
-            document.getElementById("result").innerText =
-                "Varaus on tehtävä tasatunnein (esim. 16:00–17:00).";
-            return;
+    <div id="footer"></div>
+
+
+    <script src="/js/app.js"></script>
+
+ 
+    <script>
+        async function loadPartials() {
+            document.getElementById("header").innerHTML =
+                await (await fetch("/partials/header.html")).text();
+
+            document.getElementById("footer").innerHTML =
+                await (await fetch("/partials/footer.html")).text();
         }
 
-        const diffHours = (end - start) / (1000 * 60 * 60);
-        if (diffHours !== 1) {
-            document.getElementById("result").innerText =
-                "Varausajan on oltava tasan 1 tunti.";
-            return;
-        }
+        loadPartials();
+    </script>
 
-        createReservation(roomId);
-    });
-</script>
+    <script>
+        document.getElementById("reservationForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const roomId = document.getElementById("roomSelect").value;
+            const startTime = document.getElementById("startTime").value;
+            const endTime = document.getElementById("endTime").value;
+
+            const start = new Date(startTime);
+            const end = new Date(endTime);
+
+            if (start.getMinutes() !== 0 || end.getMinutes() !== 0) {
+                document.getElementById("result").innerText =
+                    "Varaus on tehtävä tasatunnein (esim. 16:00–17:00).";
+                return;
+            }
+
+            const diffHours = (end - start) / (1000 * 60 * 60);
+            if (diffHours !== 1) {
+                document.getElementById("result").innerText =
+                    "Varausajan on oltava tasan 1 tunti.";
+                return;
+            }
+
+            createReservation(roomId);
+        });
+    </script>
 
 </body>
 </html>
