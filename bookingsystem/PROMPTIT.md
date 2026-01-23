@@ -41,4 +41,10 @@
 ![Prompt 41](public/41.jpg)
 ![Prompt 42](public/42.jpg)
 ![Prompt 43](public/43.jpg)
+![Prompt 44](public/44.jpg)
+![Prompt 45](public/45.jpg)
+![Prompt 46](public/46.jpg)
+![Prompt 47](public/47.jpg)
+![Prompt 48](public/48.jpg)
+![Prompt 49](public/49.jpg)
 
